@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>ДНК — код жизни</title>
+  <meta name="description" content="Школьный проект-презентация о ДНК: строение, история открытия, генетический код, мутации и применение.">
+  <meta name="theme-color" content="#05070f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2305070f'/%3E%3Cpath d='M10 4c0 8 12 8 12 12s-12 4-12 12M22 4c0 8-12 8-12 12s12 4 12 12' fill='none' stroke='%232ef2d0' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+  <a class="skip-link" href="#what">Перейти к содержанию</a>
+
+  <!-- Фон: частицы и спираль -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- Полоса прогресса -->
+  <div class="progress" aria-hidden="true"><span class="progress__bar" id="progress-bar"></span></div>
+
+  <!-- Верхнее меню -->
+  <header class="topbar" id="topbar">
+    <a class="logo" href="#hero" aria-label="На главный экран">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M10 4c0 8 12 8 12 12s-12 4-12 12M22 4c0 8-12 8-12 12s12 4 12 12"/></svg>
+      <span>ДНК</span>
+    </a>
+    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="nav" aria-label="Разделы">
+      <a href="#what">Что такое ДНК</a>
+      <a href="#history">История</a>
+      <a href="#structure">Строение</a>
+      <a href="#numbers">В цифрах</a>
+      <a href="#dogma">Как работает</a>
+      <a href="#code">Генетический код</a>
+      <a href="#mutations">Мутации</a>
+      <a href="#modern">Сегодня</a>
+      <a href="#quiz">Тест</a>
+      <a href="#about">Автор</a>
+    </nav>
+  </header>
+
+  <!-- Индикатор слайдов -->
+  <aside class="dots" aria-label="Слайды">
+    <div class="dots__count" aria-live="polite"><b id="slide-num">01</b><span>/ <i id="slide-total">11</i></span></div>
+    <ol class="dots__list" id="dots"></ol>
+  </aside>
+
+  <main>
+
+    <!-- 1. ГЛАВНЫЙ ЭКРАН -->
+    <section class="slide hero" id="hero" data-title="Главная">
+      <div class="hero__media">
+        <video class="hero__video" id="hero-video" muted loop playsinline preload="auto"
+               poster="assets/video/poster.jpg" aria-label="Вращающаяся молекула ДНК">
+          <source src="assets/video/dna.webm" type="video/webm">
+          <source src="assets/video/dna.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero__shade" aria-hidden="true"></div>
+      <div class="hero__content">
+        <p class="eyebrow">Школьный проект по биологии</p>
+        <h1 class="hero__title">ДНК — <span class="grad">код жизни</span></h1>
+        <p class="hero__lead">Как четыре «буквы» — А, Т, Г и Ц — записывают наследственную информацию каждой клетки</p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#what" id="start-btn">Начать
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <span class="hero__hint" id="hero-hint">Наведите курсор, чтобы запустить молекулу</span>
+        </div>
+      </div>
+      <a class="scroll-down" href="#what" aria-label="Прокрутить вниз">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </a>
+    </section>
+
+    <!-- 2. ЧТО ТАКОЕ ДНК -->
+    <section class="slide" id="what" data-title="Что такое ДНК">
+      <div class="wrap grid-2">
+        <div>
+          <p class="eyebrow reveal">02 · Знакомство</p>
+          <h2 class="reveal">Что такое <span class="grad">ДНК</span></h2>
+          <p class="big reveal" style="--d:1"><b>Д</b>езоксирибо<b>н</b>уклеиновая <b>к</b>ислота — молекула, в которой записана наследственная информация.</p>
+          <ul class="points">
+            <li class="reveal" style="--d:2">Носитель наследственной информации у <b>всех клеточных организмов</b> — от бактерий до человека.</li>
+            <li class="reveal" style="--d:3">Это полимер: очень длинная цепь из звеньев — <b>нуклеотидов</b>.</li>
+            <li class="reveal" style="--d:4">У растений, животных и грибов большая часть ДНК — в <b>ядре</b>, небольшие кольцевые молекулы — в <b>митохондриях</b> и <b>хлоропластах</b>.</li>
+          </ul>
+        </div>
+        <figure class="glass cell reveal" style="--d:2">
+          <svg class="cell__svg" viewBox="0 0 420 320" role="img" aria-labelledby="cell-title">
+            <title id="cell-title">Схема растительной клетки: ядро, митохондрия и хлоропласт содержат ДНК</title>
+            <defs>
+              <radialGradient id="g-cyto" cx="50%" cy="45%" r="60%">
+                <stop offset="0" stop-color="#1a2350"/><stop offset="1" stop-color="#0c1230"/>
+              </radialGradient>
+            </defs>
+            <rect x="14" y="14" width="392" height="292" rx="46" fill="url(#g-cyto)" stroke="#8b5cf6" stroke-width="3" stroke-opacity=".7"/>
+            <g class="cell__part" data-part="nucleus">
+              <circle cx="175" cy="150" r="78" fill="#2ef2d0" fill-opacity=".08" stroke="#2ef2d0" stroke-width="3"/>
+              <path class="cell__dna" d="M120 130c20-30 40 30 60 0s40 30 60 0M118 165c20-30 40 30 60 0s40 30 60 0" fill="none" stroke="#2ef2d0" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="185" cy="200" r="13" fill="#2ef2d0" fill-opacity=".35"/>
+            </g>
+            <g class="cell__part" data-part="mito">
+              <ellipse cx="330" cy="90" rx="52" ry="26" fill="#ff4fa3" fill-opacity=".12" stroke="#ff4fa3" stroke-width="3" transform="rotate(-18 330 90)"/>
+              <path d="M292 100c8-22 14 18 22-4s14 18 22-4 14 18 22-4" fill="none" stroke="#ff4fa3" stroke-width="2.4" transform="rotate(-18 330 90)"/>
+              <circle cx="340" cy="86" r="7" fill="none" stroke="#ff4fa3" stroke-width="2" stroke-dasharray="3 3"/>
+            </g>
+            <g class="cell__part" data-part="chloro">
+              <ellipse cx="320" cy="232" rx="60" ry="32" fill="#7dff8a" fill-opacity=".1" stroke="#7dff8a" stroke-width="3" transform="rotate(12 320 232)"/>
+              <g fill="#7dff8a" fill-opacity=".5" transform="rotate(12 320 232)">
+                <rect x="282" y="222" width="14" height="20" rx="3"/><rect x="304" y="218" width="14" height="28" rx="3"/>
+                <rect x="326" y="220" width="14" height="24" rx="3"/><rect x="348" y="224" width="12" height="16" rx="3"/>
+              </g>
+              <circle cx="300" cy="252" r="7" fill="none" stroke="#7dff8a" stroke-width="2" stroke-dasharray="3 3"/>
+            </g>
+          </svg>
+          <figcaption class="legend">
+            <button class="chip" data-part="nucleus"><i style="--c:var(--teal)"></i>Ядро — основная ДНК</button>
+            <button class="chip" data-part="mito"><i style="--c:var(--pink)"></i>Митохондрии</button>
+            <button class="chip" data-part="chloro"><i style="--c:#7dff8a"></i>Хлоропласты (у растений)</button>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 3. ИСТОРИЯ ОТКРЫТИЯ -->
+    <section class="slide" id="history" data-title="История открытия">
+      <div class="wrap">
+        <p class="eyebrow reveal">03 · История</p>
+        <h2 class="reveal">История <span class="grad">открытия</span></h2>
+        <div class="timeline reveal" style="--d:1" id="timeline">
+          <div class="timeline__track" role="tablist" aria-label="События">
+            <span class="timeline__line" aria-hidden="true"><span class="timeline__fill" id="timeline-fill"></span></span>
+          </div>
+          <div class="timeline__panel glass" id="timeline-panel" role="tabpanel" aria-live="polite">
+            <div class="timeline__year" id="tl-year"></div>
+            <div>
+              <h3 id="tl-title"></h3>
+              <p id="tl-text"></p>
+            </div>
+          </div>
+          <div class="timeline__controls">
+            <button class="icon-btn" id="tl-prev" aria-label="Предыдущее событие"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button class="icon-btn" id="tl-play" aria-label="Пауза автопрокрутки"><svg viewBox="0 0 24 24" class="i-pause"><path d="M9 6v12M15 6v12"/></svg><svg viewBox="0 0 24 24" class="i-play"><path d="M8 5l11 7-11 7z"/></svg></button>
+            <button class="icon-btn" id="tl-next" aria-label="Следующее событие"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. СТРОЕНИЕ -->
+    <section class="slide" id="structure" data-title="Строение">
+      <div class="wrap">
+        <p class="eyebrow reveal">04 · Строение</p>
+        <h2 class="reveal">Из чего <span class="grad">состоит</span> ДНК</h2>
+        <div class="grid-2 grid-2--top">
+          <div>
+            <figure class="glass nucleotide reveal" style="--d:1">
+              <figcaption class="card-label">Нуклеотид — «звено» цепи</figcaption>
+              <svg viewBox="0 0 400 200" role="img" aria-labelledby="nuc-title">
+                <title id="nuc-title">Нуклеотид: фосфатная группа, сахар дезоксирибоза и азотистое основание</title>
+                <line x1="88" y1="92" x2="150" y2="92" class="bond"/>
+                <line x1="238" y1="92" x2="282" y2="92" class="bond"/>
+                <circle cx="56" cy="92" r="34" class="nuc-phos"/>
+                <text x="56" y="101" class="nuc-letter">Ф</text>
+                <polygon points="194,52 238,84 222,136 166,136 150,84" class="nuc-sugar"/>
+                <text x="194" y="76" class="nuc-num">O</text>
+                <text x="136" y="76" class="nuc-num">5'</text>
+                <text x="250" y="76" class="nuc-num">1'</text>
+                <text x="156" y="156" class="nuc-num">3'</text>
+                <rect x="282" y="54" width="96" height="76" rx="16" class="nuc-base"/>
+                <text x="330" y="104" class="nuc-letter">А</text>
+                <text x="56" y="156" class="nuc-cap">фосфат</text>
+                <text x="194" y="182" class="nuc-cap">дезоксирибоза</text>
+                <text x="330" y="156" class="nuc-cap">основание</text>
+              </svg>
+            </figure>
+            <ul class="points points--tight">
+              <li class="reveal" style="--d:2">Нуклеотид = <b>сахар дезоксирибоза</b> + <b>фосфатная группа</b> + <b>азотистое основание</b>.</li>
+              <li class="reveal" style="--d:3">Основания: <b class="c-a">аденин (А)</b>, <b class="c-t">тимин (Т)</b>, <b class="c-g">гуанин (Г)</b>, <b class="c-c">цитозин (Ц)</b>.</li>
+              <li class="reveal" style="--d:4">Цепи <b>антипараллельны</b>: одна идёт в направлении 5'→3', другая — 3'→5'.</li>
+            </ul>
+          </div>
+          <div class="pairing glass reveal" style="--d:2">
+            <p class="card-label">Нажмите на основание — подсветится его пара</p>
+            <div class="bases" role="group" aria-label="Азотистые основания">
+              <button class="base base--a" data-base="A" aria-pressed="false">А</button>
+              <button class="base base--t" data-base="T" aria-pressed="false">Т</button>
+              <button class="base base--g" data-base="G" aria-pressed="false">Г</button>
+              <button class="base base--c" data-base="C" aria-pressed="false">Ц</button>
+            </div>
+            <svg class="pair-svg" id="pair-svg" viewBox="0 0 400 120" aria-hidden="true">
+              <rect x="20" y="20" width="140" height="80" rx="18" class="pair-l" id="pair-l"/>
+              <rect x="240" y="20" width="140" height="80" rx="18" class="pair-r" id="pair-r"/>
+              <text x="90" y="72" class="pair-letter" id="pair-l-t">?</text>
+              <text x="310" y="72" class="pair-letter" id="pair-r-t">?</text>
+              <g id="pair-bonds"></g>
+            </svg>
+            <p class="pair-info" id="pair-info">Комплементарность: <b>А–Т</b> и <b>Г–Ц</b>.</p>
+
+            <svg class="ladder" id="ladder" viewBox="0 0 520 170" role="img" aria-labelledby="ladder-title">
+              <title id="ladder-title">Две антипараллельные цепи ДНК: верхняя 5'→3', нижняя 3'→5'</title>
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0 0L10 5L0 10z" fill="currentColor"/>
+                </marker>
+              </defs>
+              <line x1="50" y1="34" x2="476" y2="34" class="strand" marker-end="url(#arrow)"/>
+              <line x1="476" y1="136" x2="50" y2="136" class="strand" marker-end="url(#arrow)"/>
+              <text x="26" y="40" class="end">5'</text><text x="494" y="40" class="end">3'</text>
+              <text x="26" y="142" class="end">3'</text><text x="494" y="142" class="end">5'</text>
+              <g id="rungs"></g>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. В ЦИФРАХ -->
+    <section class="slide" id="numbers" data-title="В цифрах">
+      <div class="wrap">
+        <p class="eyebrow reveal">05 · Масштаб</p>
+        <h2 class="reveal">Двойная спираль <span class="grad">в цифрах</span></h2>
+        <div class="stats">
+          <div class="stat glass reveal" style="--d:1"><div class="stat__num"><span class="pre">≈</span><span class="counter" data-to="2">2</span><span class="unit">нм</span></div><p>диаметр двойной спирали</p></div>
+          <div class="stat glass reveal" style="--d:2"><div class="stat__num"><span class="pre">≈</span><span class="counter" data-to="10.5" data-dec="1">10,5</span></div><p>пары оснований на один виток</p></div>
+          <div class="stat glass reveal" style="--d:3"><div class="stat__num"><span class="pre">≈</span><span class="counter" data-to="3.4" data-dec="1">3,4</span><span class="unit">нм</span><sup>*</sup></div><p>шаг спирали (длина витка)</p></div>
+          <div class="stat glass reveal" style="--d:4"><div class="stat__num"><span class="pre">≈</span><span class="counter" data-to="3.1" data-dec="1">3,1</span><span class="unit">млрд</span></div><p>пар оснований в гаплоидном геноме человека</p></div>
+          <div class="stat glass reveal" style="--d:1"><div class="stat__num"><span class="pre">≈</span><span class="counter" data-to="2">2</span><span class="unit">м</span></div><p>ДНК в ядре одной клетки человека, если её вытянуть</p></div>
+          <div class="stat glass reveal" style="--d:2"><div class="stat__num"><span class="counter" data-to="46">46</span></div><p>хромосом в клетках тела человека (23 пары)</p></div>
+          <div class="stat glass reveal" style="--d:3"><div class="stat__num"><span class="pre">≈</span><span class="counter" data-to="20000">20 000</span></div><p>генов, кодирующих белки</p></div>
+          <div class="stat glass reveal" style="--d:4"><div class="stat__num"><span class="pre">≈</span><span class="counter" data-to="99.9" data-dec="1">99,9</span><span class="unit">%</span></div><p>совпадение ДНК у любых двух людей</p></div>
+        </div>
+        <p class="footnote reveal">* 3,4&nbsp;нм — по классической модели Уотсона и Крика (10 пар на виток, 0,34&nbsp;нм между парами). По более точным измерениям в растворе на виток приходится ≈10,5 пары, и шаг составляет ≈3,6&nbsp;нм.</p>
+      </div>
+    </section>
+
+    <!-- 6. КАК РАБОТАЕТ ДНК -->
+    <section class="slide" id="dogma" data-title="Как работает ДНК">
+      <div class="wrap">
+        <p class="eyebrow reveal">06 · Механизм</p>
+        <h2 class="reveal">Как <span class="grad">работает</span> ДНК</h2>
+        <div class="dogma-flow reveal" style="--d:1" aria-label="Центральная догма молекулярной биологии">
+          <span class="node node--dna">ДНК</span>
+          <span class="flow-arrow"><i>транскрипция</i></span>
+          <span class="node node--rna">РНК</span>
+          <span class="flow-arrow"><i>трансляция</i></span>
+          <span class="node node--prot">Белок</span>
+        </div>
+        <p class="center muted reveal" style="--d:2">Центральная догма молекулярной биологии: информация передаётся от ДНК к РНК и от РНК к белку.</p>
+        <div class="cards-3">
+          <article class="card glass reveal" style="--d:2">
+            <svg class="anim anim--repl" viewBox="0 0 220 110" aria-hidden="true">
+              <path class="r-old" d="M10 55H80"/><path class="r-old" d="M10 47H80"/>
+              <path class="r-old" d="M80 47Q110 40 140 20H210"/><path class="r-old" d="M80 55Q110 62 140 90H210"/>
+              <path class="r-new" d="M140 28H210"/><path class="r-new" d="M140 82H210"/>
+            </svg>
+            <h3>Репликация</h3>
+            <p>Перед делением клетки ДНК удваивается. Цепи расходятся, и к каждой ДНК-полимераза достраивает новую по принципу комплементарности.</p>
+            <p class="tag">Полуконсервативная: в каждой новой молекуле одна цепь старая, одна новая</p>
+          </article>
+          <article class="card glass reveal" style="--d:3">
+            <svg class="anim anim--transc" viewBox="0 0 220 110" aria-hidden="true">
+              <path class="t-dna" d="M10 40H210"/><path class="t-dna" d="M10 70H210"/>
+              <path class="t-rna" d="M20 55H200"/>
+              <ellipse class="t-pol" cx="20" cy="55" rx="22" ry="26"/>
+            </svg>
+            <h3>Транскрипция</h3>
+            <p>РНК-полимераза «переписывает» участок ДНК (ген) в молекулу информационной РНК. Вместо тимина в РНК — <b>урацил (У)</b>.</p>
+            <p class="tag">У эукариот идёт в ядре</p>
+          </article>
+          <article class="card glass reveal" style="--d:4">
+            <svg class="anim anim--transl" viewBox="0 0 220 110" aria-hidden="true">
+              <path class="l-rna" d="M10 80H210"/>
+              <g class="l-rib"><ellipse cx="0" cy="66" rx="26" ry="16"/><ellipse cx="0" cy="88" rx="30" ry="12"/></g>
+              <g class="l-chain">
+                <circle cx="40" cy="30" r="7"/><circle cx="58" cy="26" r="7"/><circle cx="76" cy="32" r="7"/><circle cx="94" cy="26" r="7"/><circle cx="112" cy="32" r="7"/><circle cx="130" cy="26" r="7"/>
+              </g>
+            </svg>
+            <h3>Трансляция</h3>
+            <p>Рибосома читает мРНК по три нуклеотида (кодонами). Транспортные РНК приносят нужные аминокислоты, и из них собирается белок.</p>
+            <p class="tag">Идёт на рибосомах в цитоплазме</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. ГЕНЫ, ХРОМОСОМЫ, ГЕНЕТИЧЕСКИЙ КОД -->
+    <section class="slide" id="code" data-title="Генетический код">
+      <div class="wrap">
+        <p class="eyebrow reveal">07 · Информация</p>
+        <h2 class="reveal">Гены, хромосомы и <span class="grad">генетический код</span></h2>
+        <div class="grid-3-2">
+          <figure class="glass chromo reveal" style="--d:1">
+            <svg viewBox="0 0 200 240" role="img" aria-labelledby="chr-title">
+              <title id="chr-title">Хромосома из двух сестринских хроматид, соединённых центромерой</title>
+              <g class="chr-arm">
+                <path d="M62 18c18-6 30 4 30 20v62c0 6 4 10 4 20s-4 14-4 20v62c0 16-12 26-30 20-12-4-18-14-18-26V140c0-8 6-12 6-20s-6-12-6-20V44c0-12 6-22 18-26z" class="chr chr--l"/>
+                <path d="M138 18c-18-6-30 4-30 20v62c0 6-4 10-4 20s4 14 4 20v62c0 16 12 26 30 20 12-4 18-14 18-26V140c0-8-6-12-6-20s6-12 6-20V44c0-12-6-22-18-26z" class="chr chr--r"/>
+              </g>
+              <g class="bands">
+                <rect x="50" y="46" width="38" height="8" rx="3"/><rect x="112" y="46" width="38" height="8" rx="3"/>
+                <rect x="50" y="76" width="38" height="5" rx="2"/><rect x="112" y="76" width="38" height="5" rx="2"/>
+                <rect x="50" y="160" width="38" height="10" rx="3"/><rect x="112" y="160" width="38" height="10" rx="3"/>
+                <rect x="50" y="196" width="38" height="5" rx="2"/><rect x="112" y="196" width="38" height="5" rx="2"/>
+              </g>
+              <rect class="gene-mark" x="48" y="158" width="42" height="14" rx="4"/>
+              <circle cx="100" cy="120" r="9" class="centromere"/>
+            </svg>
+            <figcaption class="legend legend--col">
+              <span><i style="--c:var(--violet)"></i>Хромосома = ДНК + белки</span>
+              <span><i style="--c:var(--pink)"></i>центромера</span>
+              <span><i style="--c:var(--amber)"></i>ген — участок ДНК</span>
+            </figcaption>
+          </figure>
+          <div>
+            <ul class="points points--tight">
+              <li class="reveal" style="--d:1"><b>Ген</b> — участок ДНК, в котором записана информация об одном белке или молекуле РНК.</li>
+              <li class="reveal" style="--d:2"><b>Кодон</b> — 3 нуклеотида подряд. Вариантов 4<sup>3</sup> = <b>64</b>: 61 кодон кодирует аминокислоты, 3 — «стоп».</li>
+              <li class="reveal" style="--d:3">Из 64 кодонов строятся белки из <b>20 аминокислот</b>, поэтому код <b>вырожденный</b>: например, лейцин кодируют 6 разных кодонов.</li>
+              <li class="reveal" style="--d:4">Код <b>почти универсален</b>: одинаков почти у всех организмов, редкие исключения есть, например, в митохондриях.</li>
+            </ul>
+            <div class="codon glass reveal" style="--d:3">
+              <div class="codon__head">
+                <span class="card-label">Прочитаем мРНК по кодонам</span>
+                <button class="btn btn--small" id="codon-btn">Перевести</button>
+              </div>
+              <div class="codon__row" id="codon-row">
+                <span class="cod" data-aa="Мет" data-note="старт">АУГ</span>
+                <span class="cod" data-aa="Ала">ГЦУ</span>
+                <span class="cod" data-aa="Три">УГГ</span>
+                <span class="cod" data-aa="Лиз">ААА</span>
+                <span class="cod cod--stop" data-aa="СТОП">УАА</span>
+              </div>
+              <div class="codon__row codon__row--aa" id="aa-row" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. МУТАЦИИ -->
+    <section class="slide" id="mutations" data-title="Мутации">
+      <div class="wrap">
+        <p class="eyebrow reveal">08 · Изменчивость</p>
+        <h2 class="reveal"><span class="grad">Мутации</span> — изменения ДНК</h2>
+        <div class="cards-3">
+          <article class="card glass reveal" style="--d:1">
+            <div class="mut-vis mut-vis--gene" aria-hidden="true">
+              <span>Г</span><span class="swap" data-from="А" data-to="Т">А</span><span>Г</span>
+            </div>
+            <h3>Генные (точечные)</h3>
+            <p>Замена, вставка или выпадение одного или нескольких нуклеотидов внутри гена.</p>
+          </article>
+          <article class="card glass reveal" style="--d:2">
+            <div class="mut-vis mut-vis--chr" aria-hidden="true">
+              <i style="--c:var(--teal)"></i><i style="--c:var(--violet)" class="flip"></i><i style="--c:var(--pink)"></i><i style="--c:var(--amber)"></i>
+            </div>
+            <h3>Хромосомные</h3>
+            <p>Меняется строение хромосомы: участок теряется, удваивается, переворачивается или переносится.</p>
+          </article>
+          <article class="card glass reveal" style="--d:3">
+            <div class="mut-vis mut-vis--genome" aria-hidden="true">
+              <b></b><b></b><b class="extra"></b>
+            </div>
+            <h3>Геномные</h3>
+            <p>Меняется число хромосом. Пример: синдром Дауна — три хромосомы 21 вместо двух.</p>
+          </article>
+        </div>
+        <div class="grid-2 grid-2--top mut-bottom">
+          <div class="reveal" style="--d:2">
+            <h3 class="h-small">Причины</h3>
+            <div class="chips">
+              <span class="chip chip--static">ошибки при копировании ДНК</span>
+              <span class="chip chip--static">излучение: УФ, рентген, радиация</span>
+              <span class="chip chip--static">химические мутагены</span>
+            </div>
+          </div>
+          <div class="reveal" style="--d:3">
+            <h3 class="h-small">Последствия</h3>
+            <ul class="effects">
+              <li><b class="c-t">Вредные</b> — серповидноклеточная анемия: одна замена нуклеотида в гене гемоглобина.</li>
+              <li><b class="c-g">Нейтральные</b> — многие замены не меняют белок, так как код вырожденный.</li>
+              <li><b class="c-a">Полезные</b> — например, способность взрослых людей переваривать молочный сахар (лактозу).</li>
+            </ul>
+          </div>
+        </div>
+        <p class="callout glass reveal" style="--d:4">Мутации — <b>источник наследственной изменчивости</b>, а значит, материал для естественного отбора и эволюции.</p>
+      </div>
+    </section>
+
+    <!-- 9. ДНК В СОВРЕМЕННОМ МИРЕ -->
+    <section class="slide" id="modern" data-title="ДНК сегодня">
+      <div class="wrap">
+        <p class="eyebrow reveal">09 · Применение</p>
+        <h2 class="reveal">ДНК в <span class="grad">современном мире</span></h2>
+        <div class="cards-grid">
+          <article class="card glass card--icon reveal" style="--d:1">
+            <svg viewBox="0 0 48 48" class="ico" aria-hidden="true"><path d="M18 6v14L8 38a4 4 0 0 0 3.5 6h25A4 4 0 0 0 40 38L30 20V6M15 6h18M13 32h22"/></svg>
+            <h3>ПЦР-диагностика</h3>
+            <p>Полимеразная цепная реакция многократно копирует нужный участок ДНК. Так находят вирусы и бактерии даже по следовым количествам.</p>
+          </article>
+          <article class="card glass card--icon reveal" style="--d:2">
+            <svg viewBox="0 0 48 48" class="ico" aria-hidden="true"><path d="M24 6c-8 0-14 6-14 14 0 6 2 10 2 16M24 12c-5 0-8 4-8 8 0 7 3 11 3 18M24 18c-2 0-2 2-2 4 0 8 3 12 4 18M24 6c8 0 14 6 14 14 0 6-2 12-4 18M24 12c5 0 8 4 8 8 0 6-1 12-3 18"/></svg>
+            <h3>Криминалистика и родство</h3>
+            <p>ДНК-профиль у каждого человека уникален (кроме однояйцевых близнецов). По нему находят преступников и устанавливают родство. Метод придумал Алек Джеффрис в 1984 году.</p>
+          </article>
+          <article class="card glass card--icon reveal" style="--d:3">
+            <svg viewBox="0 0 48 48" class="ico" aria-hidden="true"><circle cx="24" cy="24" r="16"/><circle cx="24" cy="24" r="6"/><path d="M8 24h10M30 24h10"/></svg>
+            <h3>Генная инженерия</h3>
+            <p>В бактерию встраивают человеческий ген — и она производит нужный белок. Так с 1980-х годов получают инсулин для людей с диабетом.</p>
+          </article>
+          <article class="card glass card--icon reveal" style="--d:1">
+            <svg viewBox="0 0 48 48" class="ico" aria-hidden="true"><circle cx="13" cy="36" r="6"/><circle cx="35" cy="36" r="6"/><path d="M17 31L36 6M31 31L12 6"/></svg>
+            <h3>CRISPR/Cas9</h3>
+            <p>«Молекулярные ножницы»: белок Cas9 по подсказке РНК разрезает ДНК в точно заданном месте. Это позволяет исправлять гены.</p>
+          </article>
+          <article class="card glass card--icon reveal" style="--d:2">
+            <svg viewBox="0 0 48 48" class="ico" aria-hidden="true"><path d="M6 12h6M16 12h4M24 12h10M38 12h4M6 24h12M22 24h4M30 24h12M6 36h4M14 36h14M32 36h10"/></svg>
+            <h3>Секвенирование</h3>
+            <p>Чтение последовательности нуклеотидов. На первый геном человека ушло 13 лет (1990–2003), сегодня его можно прочитать за несколько дней.</p>
+          </article>
+          <article class="card glass card--icon reveal" style="--d:3">
+            <svg viewBox="0 0 48 48" class="ico" aria-hidden="true"><rect x="10" y="6" width="28" height="36" rx="4"/><path d="M17 16h14M17 24h14M17 32h8"/></svg>
+            <h3>Генетические тесты</h3>
+            <p>Показывают риск наследственных болезней и носительство мутаций. Результаты обязательно обсуждают с врачом-генетиком.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. МИНИ-ТЕСТ -->
+    <section class="slide" id="quiz" data-title="Мини-тест">
+      <div class="wrap wrap--narrow">
+        <p class="eyebrow reveal">10 · Проверим себя</p>
+        <h2 class="reveal">Мини-<span class="grad">тест</span></h2>
+        <div class="quiz glass reveal" style="--d:1" id="quiz-box">
+          <div class="quiz__top">
+            <span id="quiz-step">Вопрос 1 из 7</span>
+            <span class="quiz__score">Верно: <b id="quiz-score">0</b></span>
+          </div>
+          <div class="quiz__bar"><span id="quiz-bar"></span></div>
+          <h3 class="quiz__q" id="quiz-q"></h3>
+          <div class="quiz__opts" id="quiz-opts"></div>
+          <p class="quiz__explain" id="quiz-explain" aria-live="polite"></p>
+          <div class="quiz__foot">
+            <button class="btn btn--primary" id="quiz-next" hidden>Дальше</button>
+          </div>
+        </div>
+        <div class="quiz-result glass" id="quiz-result" hidden>
+          <div class="ring-wrap">
+            <svg viewBox="0 0 120 120" class="ring" aria-hidden="true">
+              <circle cx="60" cy="60" r="52" class="ring__bg"/>
+              <circle cx="60" cy="60" r="52" class="ring__fg" id="ring-fg"/>
+            </svg>
+            <div class="quiz-result__num"><b id="res-score">0</b><span>/<i id="res-total">7</i></span></div>
+          </div>
+          <p class="quiz-result__msg" id="res-msg"></p>
+          <button class="btn btn--primary" id="quiz-retry">Пройти заново</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. ОБ АВТОРЕ И ИСТОЧНИКИ -->
+    <section class="slide" id="about" data-title="Об авторе">
+      <div class="wrap grid-2 grid-2--top">
+        <div>
+          <p class="eyebrow reveal">11 · Финал</p>
+          <h2 class="reveal">Спасибо <span class="grad">за внимание!</span></h2>
+          <div class="author glass reveal" style="--d:1">
+            <div class="author__avatar" aria-hidden="true">ГД</div>
+            <div>
+              <p class="author__label">Автор проекта</p>
+              <p class="author__name">Гулько Денис</p>
+              <p class="author__class">10 класс</p>
+            </div>
+          </div>
+        </div>
+        <div class="sources glass reveal" style="--d:2">
+          <h3 class="h-small">Источники</h3>
+          <ol>
+            <li>Учебник «Биология. 10–11 классы» (базовый и углублённый уровень).</li>
+            <li>Watson J. D., Crick F. H. C. Molecular Structure of Nucleic Acids // Nature. 1953. Vol. 171. P. 737–738.</li>
+            <li>Alberts B. et al. Molecular Biology of the Cell. — Garland Science.</li>
+            <li>Нобелевский комитет: премии 1962 (физиология и медицина), 1993 и 2020 (химия) — nobelprize.org.</li>
+            <li>National Human Genome Research Institute: Human Genome Project — genome.gov.</li>
+            <li>Nurk S. et al. The complete sequence of a human genome // Science. 2022. Vol. 376.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="kbd-hint" id="kbd-hint" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> слайды · <kbd>F</kbd> полный экран</div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
